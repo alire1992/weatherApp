@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.cursor-disabled {
+  cursor: not-allowed !important;
+}
+
+.cursor-disabled:hover {
+  cursor: not-allowed !important;
+}

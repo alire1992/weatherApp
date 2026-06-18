@@ -1,10 +1,21 @@
+import { FaCloudSun } from "react-icons/fa";
+
 function Header() {
-  const firstLetter = "text-orange-500 text-6xl font-bold";
+  const headerClassConfig = {
+    firstLetter: "text-orange-500 text-6xl font-bold",
+    icon: "text-5xl text-orange-500",
+    title:
+      "text-5xl font-semibold font-serif tracking-widest text-center text-blue-500",
+  };
+
   return (
-    <h1 className="text-5xl font-semibold font-serif tracking-widest text-center text-blue-500">
-      <span className={firstLetter}>W</span>eather{" "}
-      <span className={firstLetter}>A</span>pp
-    </h1>
+    <div className="flex items-center justify-center gap-3">
+      <FaCloudSun className={headerClassConfig.icon} />
+      <h1 className={headerClassConfig.title}>
+        <span className={headerClassConfig.firstLetter}>W</span>eather{" "}
+        <span className={headerClassConfig.firstLetter}>A</span>pp
+      </h1>
+    </div>
   );
 }
 
