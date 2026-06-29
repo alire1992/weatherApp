@@ -8,14 +8,14 @@ const weatherMap = {
   },
   1: {
     icon: "🌤️",
-    nightIcon: "🌙", // Or "☁️🌙" if you want to get creative, but 🌙 is safer
+    nightIcon: "🌙",
     status: "Partly Cloudy",
     nightStatus: "Partly Cloudy Night",
     description: "Few clouds",
   },
   2: {
     icon: "⛅",
-    nightIcon: "☁️", // At night, scattered clouds just look like a dark cloudy sky
+    nightIcon: "☁️",
     status: "Cloudy",
     description: "Scattered clouds",
   },
@@ -53,7 +53,8 @@ const weatherMap = {
   },
 };
 
-export function formatDate(date) {
+// Helper to format "2026-06-20T18:00" to "Saterday, july 20"
+export const formatDate = (date) => {
   const rawDate = new Date(date);
 
   if (isNaN(rawDate.getTime())) return "Invalid Date";
@@ -63,8 +64,9 @@ export function formatDate(date) {
     month: "long",
     day: "2-digit",
   });
-}
+};
 
+// Helper to exchange code(Open Meto) Weather by weather status object
 export const getWeatherByCode = (code, isDay) => {
   const weatherStatus = weatherMap[code] || {
     icon: "❓",
@@ -81,4 +83,17 @@ export const getWeatherByCode = (code, isDay) => {
       ? weatherStatus?.status
       : weatherStatus?.nightStatus || weatherStatus?.status,
   };
+};
+
+// Helper to format "2026-06-20T18:00" to "6 PM"
+export const formatHour = (timeString) => {
+  return new Date(timeString).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: true,
+  });
+};
+
+// Helper to format "2026-06-20" to "Mon", "Tue", etc.
+export const formatDay = (dateString) => {
+  return new Date(dateString).toLocaleDateString("en-US", { weekday: "short" });
 };
