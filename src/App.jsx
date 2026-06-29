@@ -1,5 +1,11 @@
+import WeatherCard from "./components/WeatherCard";
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <WeatherCard />
+    </div>
+  );
 }
 
 export default App;
