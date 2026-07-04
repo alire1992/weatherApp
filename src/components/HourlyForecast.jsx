@@ -8,7 +8,7 @@ function HourlyForecast({ hourlyData, isDay }) {
       </h3>
 
       {/* Horizontal Scroll Container */}
-      <div className="flex overflow-x-auto space-x-6 pb-2 scrollbar-hide">
+      <div className="flex overflow-x-auto space-x-6 pb-2 scrollbar-none overflow-auto">
         {hourlyData.time.map((time, index) => {
           const weather = getWeatherByCode(
             hourlyData.weather_code[index],

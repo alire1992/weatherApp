@@ -1,8 +1,23 @@
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
+  const [query, setQuery] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!query.trim()) return;
+
+    onSearch?.(query.trim().toLowerCase());
+    setQuery("");
+  }
+
   return (
-    <form className="w-[90%] bg-blue-50 flex items-center justify-center gap-1.5  mx-auto mb-6 lg:my-auto  px-0 py-1  rounded-3xl sm:w-[75%] md:w-[45%] xl:w-[33%]">
+    <form
+      onSubmit={handleSubmit}
+      className="w-[90%] bg-blue-50 flex items-center justify-center gap-1.5  mx-auto mb-6 lg:my-auto  px-0 py-1  rounded-3xl sm:w-[75%] md:w-[45%] xl:w-[33%]"
+    >
       <button
         className="bg-blue-100 p-2 rounded-full mx-0 cursor-pointer"
         type="submit"
@@ -14,6 +29,8 @@ function SearchBar() {
         placeholder="Enter your city name..."
         name="cityName"
         className="w-[90%] border-none outline-none placeholder:text-blue-400 placeholder:font-semibold"
+        onChange={(e) => setQuery(e.target.value)}
+        value={query}
       />
     </form>
   );

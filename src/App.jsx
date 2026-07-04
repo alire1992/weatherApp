@@ -1,10 +1,18 @@
+import { useState } from "react";
 import DailyForecast from "./components/DailyForecast";
 import Header from "./components/Header";
 import HourlyForecast from "./components/HourlyForecast";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
+import { useGeoLocation } from "./hooks/useGeoLocation";
 
 function App() {
+  const [searchCity, setSearchCity] = useState("");
+
+  const { data } = useGeoLocation(searchCity);
+
+  console.log(data?.at(0));
+
   // Fake data matching Open-Meteo structure
   const currentWeather = {
     cityName: "Tehran",
@@ -50,13 +58,14 @@ function App() {
   const background = isDay
     ? "bg-gradient-to-b from-cyan-300 to-sky-500"
     : "bg-gradient-to-b from-indigo-950 to-slate-900";
+
   return (
     <div
       className={`min-h-screen ${background} font-sans p-4 md:p-8 transition-colors duration-500`}
     >
       <header className="flex flex-col items-center justify-center lg:flex-row lg:justify-between">
         <Header />
-        <SearchBar />
+        <SearchBar onSearch={setSearchCity} />
       </header>
       <main>
         <WeatherCard />
