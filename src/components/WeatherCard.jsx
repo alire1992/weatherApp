@@ -1,4 +1,4 @@
-import { formatDate, getWeatherByCode } from "../utilites";
+import { formatDate, getWeatherByCode } from "../utilities";
 
 function WeatherCard({ currentWeather, isDay, cityName }) {
   const date = formatDate(currentWeather?.time);
@@ -10,7 +10,9 @@ function WeatherCard({ currentWeather, isDay, cityName }) {
     : "bg-gradient-to-b from-indigo-950 to-slate-900";
 
   return (
-    <div className={`w-full ${background} shadow-xl font-sans text-white p-6`}>
+    <div
+      className={`w-full ${background} shadow-xl rounded-4xl font-sans text-white p-6`}
+    >
       {/* {Header} */}
       <div className="flex flex-col items-center justify-center space-y-6 mb-6 lg:flex-row lg:items-center lg:justify-around">
         <div className="text-7xl drop-shadow-lg lg:order-2">

@@ -1,15 +1,18 @@
-import { getWeatherByCode, formatDay } from "../utilites";
+import { getWeatherByCode, formatDay } from "../utilities";
 
 function DailyForecast({ dailyData }) {
   return (
-    <div className="w-full  mx-auto bg-white/10 backdrop-blur-md  p-4 text-white">
+    <div className="w-full rounded-4xl  mx-auto bg-white/10 backdrop-blur-md  p-4 text-white">
       <h3 className="text-sm font-semibold uppercase tracking-wider text-sky-100 mb-4 px-2">
         7-Day Forecast
       </h3>
 
       <div className="divide-y divide-white/10">
         {dailyData?.time.map((day, index) => {
-          const weather = getWeatherByCode(dailyData?.weather_code[index]);
+          const weather = getWeatherByCode(
+            dailyData?.weather_code[index],
+            true,
+          );
 
           return (
             <div

@@ -25,8 +25,8 @@ function App() {
 
   const {
     data: weatherData,
-    isLoading: isWethLoading,
-    error: wethError,
+    isLoading: isWeatherLoading,
+    error: weatherError,
   } = useWeather(lat, lon);
 
   const {
@@ -45,17 +45,26 @@ function App() {
     <div
       className={`min-h-screen ${background} font-sans p-4 md:p-8 transition-colors duration-500`}
     >
-      <header className="flex flex-col items-center justify-center lg:flex-row lg:justify-between">
+      <div className="flex flex-col items-center justify-center lg:flex-row lg:justify-between mb-8">
         <Header />
         <SearchBar onSearch={setSearchCity} />
-      </header>
-      <main>
-        {!searchCity && <EmptyState />}
-        {(isGeoLoading || isWethLoading) && <Loader />}
-        {(geoError || wethError) && <ErrorMessage />}
+      </div>
 
-        {searchCity && currentWeather && !geoError && !wethError && (
-          <>
+      <main>
+        {/* Show Empty State if no city is searched */}
+        {!searchCity && <EmptyState />}
+
+        {/* Show Loader if fetching */}
+        {(isGeoLoading || isWeatherLoading) && <Loader />}
+
+        {/* Show Error if something failed */}
+        {(geoError || weatherError) && (
+          <ErrorMessage message={geoError?.message || weatherError?.message} />
+        )}
+
+        {/* Show Weather ONLY if we have a city, data, and NO errors */}
+        {searchCity && currentWeather && !geoError && !weatherError && (
+          <div className="flex flex-col gap-6 max-w-4xl mx-auto">
             <WeatherCard
               currentWeather={currentWeather}
               isDay={isDay}
@@ -63,7 +72,7 @@ function App() {
             />
             <HourlyForecast hourlyData={hourlyData} isDay={isDay} />
             <DailyForecast dailyData={dailyData} />
-          </>
+          </div>
         )}
       </main>
     </div>

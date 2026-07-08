@@ -1,8 +1,8 @@
-import { getWeatherByCode, formatHour } from "../utilites";
+import { getWeatherByCode, formatHour } from "../utilities";
 
 function HourlyForecast({ hourlyData, isDay }) {
   return (
-    <div className="w-full  mx-auto bg-white/10 backdrop-blur-md  p-4 text-white">
+    <div className="w-full rounded-4xl  mx-auto bg-white/10 backdrop-blur-md  p-4 text-white">
       <h3 className="text-sm font-semibold uppercase tracking-wider text-sky-100 mb-4 px-2">
         Hourly Forecast
       </h3>
