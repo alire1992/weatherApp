@@ -1,59 +1,41 @@
 import { useState } from "react";
+
+import { useGeoLocation } from "./hooks/useGeoLocation";
+import { useWeather } from "./hooks/useWeather";
+
 import DailyForecast from "./components/DailyForecast";
 import Header from "./components/Header";
 import HourlyForecast from "./components/HourlyForecast";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
-import { useGeoLocation } from "./hooks/useGeoLocation";
+import EmptyState from "./components/EmptyState";
+import Loader from "./components/Loader";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [searchCity, setSearchCity] = useState("");
 
-  const { data } = useGeoLocation(searchCity);
+  const {
+    data: geoData = [],
+    isLoading: isGeoLoading,
+    error: geoError,
+  } = useGeoLocation(searchCity);
 
-  console.log(data?.at(0));
+  const { lat, lon, name: cityName } = geoData.at(0) || {};
 
-  // Fake data matching Open-Meteo structure
-  const currentWeather = {
-    cityName: "Tehran",
-    apparent_temperature: 31.5,
-    is_day: 1,
-    relative_humidity_2m: 11,
-    temperature_2m: 34.5,
-    time: "2026-06-20T18:45",
-    weather_code: 0,
-    wind_speed_10m: 5.6,
-  };
+  const {
+    data: weatherData,
+    isLoading: isWethLoading,
+    error: wethError,
+  } = useWeather(lat, lon);
 
-  const hourlyData = {
-    time: [
-      "2026-06-20T18:00",
-      "2026-06-20T19:00",
-      "2026-06-20T20:00",
-      "2026-06-20T21:00",
-      "2026-06-20T22:00",
-      "2026-06-20T23:00",
-      "2026-06-21T00:00",
-      "2026-06-21T01:00",
-    ],
-    temperature_2m: [34, 32, 30, 28, 27, 24, 23, 23],
-    weather_code: [0, 0, 1, 1, 2, 2, 2, 1],
-  };
+  const {
+    current: currentWeather,
+    hourly: hourlyData,
+    daily: dailyData,
+  } = weatherData || {};
 
-  const dailyData = {
-    time: [
-      "2026-06-20",
-      "2026-06-21",
-      "2026-06-22",
-      "2026-06-23",
-      "2026-06-24",
-    ],
-    weather_code: [0, 1, 2, 51, 61],
-    temperature_2m_max: [35, 36, 34, 30, 28],
-    temperature_2m_min: [25, 26, 24, 22, 20],
-  };
-
-  const isDay = Number(currentWeather.is_day) === 1;
+  const isDay = Number(currentWeather?.is_day) === 1;
 
   const background = isDay
     ? "bg-gradient-to-b from-cyan-300 to-sky-500"
@@ -68,9 +50,21 @@ function App() {
         <SearchBar onSearch={setSearchCity} />
       </header>
       <main>
-        <WeatherCard />
-        <HourlyForecast hourlyData={hourlyData} isDay={isDay} />
-        <DailyForecast dailyData={dailyData} />
+        {!searchCity && <EmptyState />}
+        {(isGeoLoading || isWethLoading) && <Loader />}
+        {(geoError || wethError) && <ErrorMessage />}
+
+        {searchCity && currentWeather && !geoError && !wethError && (
+          <>
+            <WeatherCard
+              currentWeather={currentWeather}
+              isDay={isDay}
+              cityName={cityName}
+            />
+            <HourlyForecast hourlyData={hourlyData} isDay={isDay} />
+            <DailyForecast dailyData={dailyData} />
+          </>
+        )}
       </main>
     </div>
   );

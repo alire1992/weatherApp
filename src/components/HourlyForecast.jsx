@@ -9,9 +9,9 @@ function HourlyForecast({ hourlyData, isDay }) {
 
       {/* Horizontal Scroll Container */}
       <div className="flex overflow-x-auto space-x-6 pb-2 scrollbar-none overflow-auto">
-        {hourlyData.time.map((time, index) => {
+        {hourlyData?.time.map((time, index) => {
           const weather = getWeatherByCode(
-            hourlyData.weather_code[index],
+            hourlyData?.precipitation[index],
             isDay,
           );
 
@@ -25,7 +25,7 @@ function HourlyForecast({ hourlyData, isDay }) {
               </p>
               <div className="text-2xl">{weather.icon}</div>
               <p className="text-sm font-semibold">
-                {Math.round(hourlyData.temperature_2m[index])}°
+                {Math.round(hourlyData?.temperature_2m[index])}°
               </p>
             </div>
           );

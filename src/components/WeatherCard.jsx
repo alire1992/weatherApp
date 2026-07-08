@@ -1,38 +1,9 @@
-// import { useEffect } from "react";
-
 import { formatDate, getWeatherByCode } from "../utilites";
 
-function WeatherCard() {
-  //   useEffect(() => {
-  //     fetch(
-  //       "https://api.open-meteo.com/v1/forecast?latitude=35.72&longitude=51.33&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,precipitation,wind_speed_120m,relative_humidity_2m&current=temperature_2m,is_day,rain,snowfall,showers,precipitation,relative_humidity_2m,apparent_temperature,cloud_cover,wind_speed_10m,weather_code&timezone=auto",
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data));
-  //   }, []);
+function WeatherCard({ currentWeather, isDay, cityName }) {
+  const date = formatDate(currentWeather?.time);
 
-  // fake data base of data  fetched 👆
-  const currentWeather = {
-    cityName: "Tehran", //figure out later
-    apparent_temperature: 31.5,
-    cloud_cover: 0,
-    interval: 900,
-    is_day: 1,
-    precipitation: 0,
-    rain: 0,
-    relative_humidity_2m: 11,
-    showers: 0,
-    snowfall: 0,
-    temperature_2m: 34.5,
-    time: "2026-06-20T18:45",
-    weather_code: 0,
-    wind_speed_10m: 5.6,
-  };
-
-  const date = formatDate(currentWeather.time);
-  const isDay = Number(currentWeather.is_day) === 1;
-
-  const weatherStatus = getWeatherByCode(currentWeather.weather_code, isDay);
+  const weatherStatus = getWeatherByCode(currentWeather?.weather_code, isDay);
 
   const background = isDay
     ? "bg-gradient-to-b from-cyan-300 to-sky-500"
@@ -46,9 +17,7 @@ function WeatherCard() {
           {weatherStatus.icon}
         </div>
         <div className="text-center">
-          <h2 className="text-3xl font-bold lg:order-1">
-            {currentWeather?.cityName}
-          </h2>
+          <h2 className="text-3xl font-bold lg:order-1">{cityName}</h2>
           <p className="text-sky-100 text-sm">{date} (today)</p>
         </div>
       </div>

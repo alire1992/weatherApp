@@ -8,8 +8,8 @@ function DailyForecast({ dailyData }) {
       </h3>
 
       <div className="divide-y divide-white/10">
-        {dailyData.time.map((day, index) => {
-          const weather = getWeatherByCode(dailyData.weather_code[index]);
+        {dailyData?.time.map((day, index) => {
+          const weather = getWeatherByCode(dailyData?.weather_code[index]);
 
           return (
             <div
@@ -32,11 +32,11 @@ function DailyForecast({ dailyData }) {
               {/* Min / Max Temps */}
               <div className="flex space-x-3 text-sm">
                 <span className="text-sky-200">
-                  {Math.round(dailyData.temperature_2m_min[index])}°
+                  {Math.round(dailyData?.temperature_2m_min[index])}°
                 </span>
                 <div className="w-12 h-1 rounded-full bg-gradient-to-r from-blue-400 to-orange-400 mt-2 hidden sm:block"></div>
                 <span className="font-semibold">
-                  {Math.round(dailyData.temperature_2m_max[index])}°
+                  {Math.round(dailyData?.temperature_2m_max[index])}°
                 </span>
               </div>
             </div>
