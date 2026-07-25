@@ -97,3 +97,14 @@ export const formatHour = (timeString) => {
 export const formatDay = (dateString) => {
   return new Date(dateString).toLocaleDateString("en-US", { weekday: "short" });
 };
+
+// Helper to format timestamp Date.now() "2026-07-25T00:00" (ex)
+
+export const formatLocalDateNow = () => {
+  const date = new Date(Date.now());
+  date.setMinutes(0, 0, 0);
+
+  const pad = (n) => n.toString().padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:00`;
+};
