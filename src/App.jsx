@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCitySearch } from "./hooks/useCitySearch";
 import { useWeather } from "./hooks/useWeather";
 import { useUserLocation } from "./hooks/useUserLocation";
+import { useCityName } from "./hooks/useCityName";
 
 import DailyForecast from "./components/DailyForecast";
 import Header from "./components/Header";
@@ -36,7 +37,15 @@ function App() {
   // Decide which coordinates the weather query uses
   const usingMyLocation = source === "location" && !!position;
   const coords = usingMyLocation ? position : { lat, lon };
-  const title = usingMyLocation ? "Your location" : cityName;
+
+  // Fetch city name if using my location
+  const {
+    cityData,
+    isLoading: isCityLoading,
+    error: cityError,
+  } = useCityName(usingMyLocation ? position : {});
+
+  const title = usingMyLocation ? cityData?.name || "Your location" : cityName;
 
   // Must come AFTER `coords` is calculated
   const {
@@ -68,9 +77,12 @@ function App() {
     ? "bg-gradient-to-b from-cyan-300 to-sky-500"
     : "bg-gradient-to-b from-indigo-950 to-slate-900";
 
-  const isLoading = isGeoLoading || isWeatherLoading || isLocating;
+  const isLoading =
+    isGeoLoading || isWeatherLoading || isLocating || isCityLoading;
   const error =
-    (source === "location" ? locationError : geoError) || weatherError;
+    (source === "location" ? locationError : geoError) ||
+    weatherError ||
+    cityError;
 
   // Show exactly one state at a time
   let content;
