@@ -11,8 +11,9 @@ function EmptyState() {
         Ready to check the weather?
       </h3>
       <p className="text-blue-100/90 max-w-md text-lg leading-relaxed">
-        Enter a city name in the search bar above to get real-time weather
-        information, hourly forecasts, and daily predictions!
+        Enter a city name in the search bar above or use my location button to
+        get real-time weather information, hourly forecasts, and daily
+        predictions!
       </p>
       <div className="mt-8 flex gap-2 text-blue-200/60 text-sm">
         <span>🌍 Worldwide coverage</span>
