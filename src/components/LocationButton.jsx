@@ -6,7 +6,7 @@ function LocationButton({ onLocate, isLocating }) {
       onClick={onLocate}
       disabled={isLocating}
       aria-label="Use my location"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-white/90 px-5 py-3 font-medium text-slate-800 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white disabled:cursor-wait disabled:opacity-70"
+      className="fixed bottom-24 right-4 z-1100 lg:bottom-6 lg:right-6 flex items-center gap-2 rounded-full bg-white/90 px-5 py-3 font-medium text-slate-800 shadow-lg backdrop-blur transition hover:scale-105 hover:bg-white disabled:cursor-wait disabled:opacity-70"
     >
       <FaLocationArrow className={isLocating ? "animate-pulse" : ""} />
       <span className="hidden sm:inline">

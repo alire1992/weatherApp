@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+
 import Header from "./Header";
+import Navbar from "./Navbar";
 import PageShell from "./PageShell";
 import SearchBar from "./SearchBar";
-import { useUserLocation } from "../hooks/useUserLocation";
 import LocationButton from "./LocationButton";
-import { Outlet } from "react-router-dom";
+import { useUserLocation } from "../hooks/useUserLocation";
 
 function AppLayout() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const [searchCity, setSearchCity] = useState("");
   const [source, setSource] = useState("search"); // "search" | "location"
   const [isDay, setIsDay] = useState(true); // Home updates this
@@ -25,24 +30,27 @@ function AppLayout() {
   const handleSearch = (city) => {
     setSource("search");
     setSearchCity(city);
-    // navigate("/");
+    navigate("/");
   };
 
   const handleLocate = () => {
     setSource("location");
     getPosition();
-    // navigate("/");
+    navigate("/");
   };
 
   // Hide the button only when my location is already on screen
-  //   const showLocationButton = !(usingMyLocation && pathname === "/");
+  const showLocationButton = !(usingMyLocation && pathname === "/");
 
   return (
     <PageShell isDay={isDay}>
-      <div className="flex flex-col items-center justify-center lg:flex-row lg:justify-between mb-8">
+      <div className="mb-6 flex flex-col items-center gap-4 lg:flex-row lg:justify-between">
         <Header />
-        <SearchBar onSearch={handleSearch} />
+        <Navbar isDay={isDay} />
       </div>
+
+      <SearchBar onSearch={handleSearch} />
+
       <Outlet
         context={{
           searchCity,
@@ -54,7 +62,8 @@ function AppLayout() {
           setIsDay,
         }}
       />
-      {!usingMyLocation && (
+
+      {showLocationButton && (
         <LocationButton onLocate={handleLocate} isLocating={isLocating} />
       )}
     </PageShell>
