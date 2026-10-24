@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCityName } from "../apiClient";
+import { fetchCityName } from "../services/apiClient";
 
 export function useCityName({ lat, lon } = {}) {
   const {

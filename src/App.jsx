@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AppLayout from "./components/AppLayout";
 import Home from "./pages/Home";
-import Favorite from "./pages/Favorite";
-import Map from "./pages/Map";
+import Favorites from "./pages/Favorites";
+import MapPage from "./pages/MapPage";
 
 function App() {
   return (
@@ -11,8 +11,8 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<Favorite />} />
-          <Route path="/map" element={<Map />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/map" element={<MapPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

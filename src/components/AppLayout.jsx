@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 import Header from "./Header";
 import Navbar from "./Navbar";
@@ -15,6 +20,9 @@ function AppLayout() {
   const [searchCity, setSearchCity] = useState("");
   const [source, setSource] = useState("search"); // "search" | "location"
   const [isDay, setIsDay] = useState(true); // Home updates this
+
+  const [searchParams] = useSearchParams();
+  const viewingFavorite = searchParams.has("lat") && searchParams.has("lon");
 
   const {
     position,
@@ -40,7 +48,11 @@ function AppLayout() {
   };
 
   // Hide the button only when my location is already on screen
-  const showLocationButton = !(usingMyLocation && pathname === "/");
+  const showLocationButton = !(
+    usingMyLocation &&
+    pathname === "/" &&
+    !viewingFavorite
+  );
 
   return (
     <PageShell isDay={isDay}>

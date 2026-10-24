@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchGeoLoaction } from "../apiClient";
+import { fetchGeoLoaction } from "../services/apiClient";
 
 export function useCitySearch(cityName) {
   const { data, isLoading, error } = useQuery({

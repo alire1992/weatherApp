@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchWeather } from "../apiClient";
+import { fetchWeather } from "../services/apiClient";
 
 export function useWeather(lat, lon) {
   const { data, isLoading, error, refetch } = useQuery({
