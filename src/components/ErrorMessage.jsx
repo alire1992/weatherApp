@@ -17,7 +17,7 @@ function ErrorMessage({
       <p className="text-red-600 text-center mb-4">{message}</p>
 
       {onRetry && (
-        <Button variant="error" onClick={onRetry}>
+        <Button variant="danger" onClick={onRetry}>
           Try Again
         </Button>
       )}

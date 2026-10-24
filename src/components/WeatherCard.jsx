@@ -11,10 +11,10 @@ function WeatherCard({ currentWeather, isDay, cityName }) {
 
   return (
     <div
-      className={`w-full ${background} shadow-xl rounded-4xl font-sans text-white p-6`}
+      className={`w-full ${background} shadow-xl  rounded-4xl mt-2 font-sans text-white p-6`}
     >
       {/* {Header} */}
-      <div className="flex flex-col items-center justify-center space-y-6 mb-6 lg:flex-row lg:items-center lg:justify-around">
+      <div className="flex flex-col items-center justify-center space-y-6 mt-2 mb-6 lg:flex-row lg:items-center lg:justify-around">
         <div className="text-7xl drop-shadow-lg lg:order-2">
           {weatherStatus.icon}
         </div>
