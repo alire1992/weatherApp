@@ -1,12 +1,13 @@
-export const BASE_URL_OPEN_METO = "https://api.open-meteo.com/v1/forecast?";
-export const BASE_URL_BCD =
-  "https://api.bigdatacloud.net/data/reverse-geocode-client?";
-export const OPTIONS =
-  "&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&hourly=temperature_2m,precipitation,wind_speed_120m,relative_humidity_2m&current=temperature_2m,is_day,rain,snowfall,showers,precipitation,relative_humidity_2m,apparent_temperature,cloud_cover,wind_speed_10m,weather_code&timezone=auto";
+import {
+  BASE_URL_OPEN_METO,
+  BASE_URL_OPEN_STREET,
+  CARD_OPTIONS,
+  OPTIONS,
+} from "./apiservices";
 
-export const fetchWeather = async (lat, lon) => {
+export const fetchWeather = async (lat, lon, options = OPTIONS) => {
   const res = await fetch(
-    `${BASE_URL_OPEN_METO}latitude=${lat}&longitude=${lon}${OPTIONS}`,
+    `${BASE_URL_OPEN_METO}latitude=${lat}&longitude=${lon}${options}`,
   );
 
   if (!res.ok)
@@ -17,7 +18,17 @@ export const fetchWeather = async (lat, lon) => {
   return data;
 };
 
-export const BASE_URL_OPEN_STREET = "https://nominatim.openstreetmap.org";
+export async function fetchFavoritesWeather(favorites) {
+  if (!favorites.length) return [];
+
+  const lats = favorites.map((f) => f.lat).join(",");
+  const lons = favorites.map((f) => f.lon).join(",");
+
+  const data = await fetchWeather(lats, lons, CARD_OPTIONS);
+
+  // One location returns an object, several return an array
+  return Array.isArray(data) ? data : [data];
+}
 
 export const fetchGeoLoaction = async (cityName) => {
   const res = await fetch(
