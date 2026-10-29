@@ -5,12 +5,14 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 
 import Header from "./Header";
 import Navbar from "./Navbar";
 import PageShell from "./PageShell";
 import SearchBar from "./SearchBar";
 import LocationButton from "./LocationButton";
+import ErrorFallback from "./ErrorFallback";
 import { useUserLocation } from "../hooks/useUserLocation";
 
 function AppLayout() {
@@ -62,18 +64,19 @@ function AppLayout() {
       </div>
 
       <SearchBar onSearch={handleSearch} />
-
-      <Outlet
-        context={{
-          searchCity,
-          source,
-          position,
-          usingMyLocation,
-          isLocating,
-          locationError,
-          setIsDay,
-        }}
-      />
+      <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[pathname]}>
+        <Outlet
+          context={{
+            searchCity,
+            source,
+            position,
+            usingMyLocation,
+            isLocating,
+            locationError,
+            setIsDay,
+          }}
+        />
+      </ErrorBoundary>
 
       {showLocationButton && (
         <LocationButton onLocate={handleLocate} isLocating={isLocating} />
