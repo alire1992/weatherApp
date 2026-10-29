@@ -65,7 +65,7 @@ function WeatherMap({ selected, onSelect, favorites, favoritesWeather }) {
       />
 
       {/* Hide the pin when the clicked point is already a favorite marker */}
-      {selected && !isFavorite(selected.lat, selected.lon) && (
+      {selected && !isFavorite(selected.cityName) && (
         <Marker position={[selected.lat, selected.lon]} icon={pinIcon} />
       )}
 

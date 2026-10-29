@@ -6,16 +6,17 @@ const FavoritesContext = createContext();
 export default function FavoritesProvider({ children }) {
   const [favorites, setFavorites] = useLocalStorageState([], "favorites");
 
-  const isFavorite = (lat, lon) =>
-    favorites.some((favorite) => favorite.lat === lat && favorite.lon === lon);
+  const isFavorite = (cityName) => {
+    console.log(cityName);
+    return favorites.some((favorite) => favorite.cityName === cityName);
+  };
 
   const toggleFavorite = (city) =>
     setFavorites((prev) =>
-      prev.some((f) => f.lat === city.lat && f.lon === city.lon)
-        ? prev.filter((f) => !(f.lat === city.lat && f.lon === city.lon))
+      prev.some((f) => f.cityName === city.cityName)
+        ? prev.filter((f) => !(f.cityName === city.cityName))
         : [...prev, city],
     );
-
   return (
     <FavoritesContext.Provider
       value={{ isFavorite, toggleFavorite, favorites }}

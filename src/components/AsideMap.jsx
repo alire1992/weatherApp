@@ -38,7 +38,7 @@ function AsideMap({
   const title = cityName || "Selected location";
 
   const href = `/?lat=${selected.lat}&lon=${selected.lon}&cityName=${encodeURIComponent(title)}`;
-  const saved = isFavorite(selected.lat, selected.lon);
+  const saved = isFavorite(cityName);
 
   return (
     <div className="flex flex-col">

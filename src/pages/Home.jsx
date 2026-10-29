@@ -95,7 +95,11 @@ function Home() {
     (source === "location" ? locationError : geoError) || weatherError;
 
   function handleFavorite() {
-    toggleFavorite({ lat: coords.lat, lon: coords.lon, cityName: title });
+    toggleFavorite({
+      lat: coords.lat,
+      lon: coords.lon,
+      cityName: title,
+    });
   }
 
   if (isLoading) return <Loader />;
@@ -122,7 +126,7 @@ function Home() {
         <FavoriteButton
           name={title}
           onClick={handleFavorite}
-          isFavorite={isFavorite(coords.lat, coords.lon)}
+          isFavorite={isFavorite(title)}
         />
       )}
 
